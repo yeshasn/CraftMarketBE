@@ -55,6 +55,30 @@ app.post("/register", async (req, res) => {
   }
 });
 
+app.post("/UpdateUser", async(req, res) => {
+  const {name, phone, oldPhone} = req.body;
+  
+  try {
+    console.log("OLD PHONE IS " + oldPhone);
+    const possibleCurrentUser = await User.findOne({ phone });
+
+    if (possibleCurrentUser) {
+      return res.json({ error: "Phone number already belongs to a user"});
+    }
+  
+    const existingUser = User.findOne({ oldPhone });
+    console.log("Name is " + existingUser.name);
+
+    User.updateOne({phone: oldPhone}, {name: name, phone: phone});
+    
+    res.send({status: "ok"});
+  }
+  catch (error) {
+    res.send({ status: "error" });
+  }
+
+});
+
 app.post("/login-user", async (req, res) => {
   const { phone, pwd } = req.body;
 
@@ -89,6 +113,8 @@ app.post("/userData", async (req, res) => {
       });
   } catch (error) {}
 });
+
+
 
 app.listen(5005, () => {
   console.log("Server started");

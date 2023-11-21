@@ -30,8 +30,62 @@ mongoose
   .catch((e) => console.log(e));
 
 require("./userDetails");
+require("./products");
 
 const User = mongoose.model("UserInfo");
+const Products = mongoose.model("Products");
+
+app.post("/products/add", async (req, res) => {
+  const { title, imageUrl, price, desc, phone, name } = req.body;
+  const productDetail = req.body;
+
+  console.log("Product Detail >>>>", productDetail);
+
+  try {
+    await Products.create({
+      title,
+      imageUrl,
+      price,
+      desc,
+      phone,
+      name,
+    });
+    res.send({ status: "ok" });
+  } catch (error) {
+    res.send({ status: "error" });
+  }
+});
+
+app.get("/products/get", async (req, res) => {
+  // Products.find((err, data) => {
+  //   if (err) {
+  //     res.status(500).send(err);
+  //   } else {
+  //     res.status(200).send(data);
+  //   }
+  // });
+  try {
+    const allProducts = await Products.find({});
+    res.send({ status: "ok", data: allProducts });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.post("/delete-item", async (req, res) => {
+  const { itemId } = req.body;
+  try {
+    Products.deleteOne({ _id: itemId })
+      .then((data) => {
+        res.send({ status: "ok", data: "deleted" });
+      })
+      .catch((error) => {
+        res.send({ status: "error", data: error });
+      });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 app.post("/register", async (req, res) => {
   const { name, phone, pwd } = req.body;

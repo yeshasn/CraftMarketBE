@@ -3,14 +3,15 @@ const mongoose = require("mongoose");
 const ProductSchema = mongoose.Schema(
   {
     title: String,
-    imgUrl: String,
+    imageUrl: String,
     price: String,
     desc: String,
-    sellerPhone: String,
+    phone: String,
+    name: String,
   },
   {
     collection: "Products",
   }
 );
 
-mongoose.model("Products", UserDetailsScehma);
+mongoose.model("Products", ProductSchema);

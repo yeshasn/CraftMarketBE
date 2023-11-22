@@ -66,11 +66,10 @@ app.post("/UpdateUser", async(req, res) => {
       return res.json({ error: "Phone number already belongs to a user"});
     }
   
-    const existingUser = User.findOne({ oldPhone });
-    console.log("Name is " + existingUser.name);
-
-    User.updateOne({phone: oldPhone}, {name: name, phone: phone});
+    const query = {phone: oldPhone};
+    await User.updateOne(query, {name: name, phone: phone});
     
+
     res.send({status: "ok"});
   }
   catch (error) {

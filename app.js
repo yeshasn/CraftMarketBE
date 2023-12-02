@@ -20,7 +20,7 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = "dlkajsfdoijawlekmadflaslkejflkwjaefklk23948290";
 
 const mongoUrl =
-  "mongodb+srv://yeshasnath:Oknmsmongodb1!@craftmarketauth.yh7lbdx.mongodb.net/CraftMarketAuth?retryWrites=true&w=majority";
+  "mongodb+srv://<user>:<pwd>!@craftmarketauth.yh7lbdx.mongodb.net/CraftMarketAuth?retryWrites=true&w=majority";
 
 mongoose
   .connect(mongoUrl)
